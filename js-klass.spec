@@ -1,12 +1,12 @@
 %define		pkg	klass
-Summary:	Utility for creating expressive classes in JavaScript
+Summary:	Class provider with classical inheritance interface
 Name:		js-%{pkg}
-Version:	1.0
-Release:	2
+Version:	1.2.2
+Release:	1
 License:	MIT
 Group:		Applications/WWW
-Source0:	https://github.com/ded/klass/tarball/v1.0/%{pkg}-%{version}.tgz
-# Source0-md5:	0bd574d1cfa02ffee98af466b9ec3491
+Source0:	https://github.com/ded/klass/tarball/master/%{pkg}-%{version}.tgz
+# Source0-md5:	82df3cdf7b1a0f468f2bb5e4d48fa6c6
 URL:		http://www.dustindiaz.com/klass
 BuildRequires:	rpmbuild(macros) >= 1.461
 Requires:	webapps
