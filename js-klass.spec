@@ -2,11 +2,13 @@
 Summary:	Class provider with classical inheritance interface
 Name:		js-%{pkg}
 Version:	1.2.2
-Release:	1
+Release:	2
 License:	MIT
 Group:		Applications/WWW
 Source0:	https://github.com/ded/klass/tarball/master/%{pkg}-%{version}.tgz
 # Source0-md5:	82df3cdf7b1a0f468f2bb5e4d48fa6c6
+Source1:	apache.conf
+Source2:	lighttpd.conf
 URL:		http://www.dustindiaz.com/klass
 BuildRequires:	rpmbuild(macros) >= 1.461
 Requires:	webapps
@@ -28,21 +30,6 @@ classical interface to prototypal inheritance.
 %setup -qc
 mv *-%{pkg}-*/* .
 
-# apache1/apache2 conf
-cat > apache.conf <<'EOF'
-Alias /js/klass %{_appdir}
-<Directory %{_appdir}>
-	Allow from all
-</Directory>
-EOF
-
-# lighttpd conf
-cat > lighttpd.conf <<'EOF'
-alias.url += (
-    "/js/klass" => "%{_appdir}",
-)
-EOF
-
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}}
@@ -50,9 +37,9 @@ cp -p %{pkg}.js $RPM_BUILD_ROOT%{_appdir}/%{pkg}-%{version}.js
 cp -p %{pkg}.min.js $RPM_BUILD_ROOT%{_appdir}/%{pkg}-%{version}.min.js
 ln -s %{pkg}-%{version}.min.js $RPM_BUILD_ROOT%{_appdir}/%{pkg}.js
 
-cp -a apache.conf $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
-cp -a apache.conf $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
-cp -a lighttpd.conf $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
+cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
+cp -p %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
+cp -p $RPM_BUILD_ROOT%{_sysconfdir}/{apache,httpd}.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
